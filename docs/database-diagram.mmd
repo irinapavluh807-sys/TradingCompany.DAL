@@ -1,0 +1,63 @@
+erDiagram
+    WAREHOUSE_MANAGERS ||--o{ SUPPLY_ORDERS : creates
+    SUPPLIERS ||--o{ PRODUCTS : supplies
+    SUPPLIERS ||--o{ SUPPLY_ORDERS : receives
+    PRODUCTS ||--|| WAREHOUSE_STOCKS : has
+    SUPPLY_ORDERS ||--o{ SUPPLY_ORDER_ITEMS : contains
+    PRODUCTS ||--o{ SUPPLY_ORDER_ITEMS : ordered_as
+
+    WAREHOUSE_MANAGERS {
+        INT id PK
+        NVARCHAR username UK
+        NVARCHAR password_hash
+        NVARCHAR full_name
+        NVARCHAR email UK
+        DATETIME2 created_at
+    }
+
+    SUPPLIERS {
+        INT id PK
+        NVARCHAR name UK
+        NVARCHAR contact_name
+        NVARCHAR phone
+        NVARCHAR email UK
+        NVARCHAR address
+        BIT is_active
+    }
+
+    PRODUCTS {
+        INT id PK
+        INT supplier_id FK
+        NVARCHAR sku UK
+        NVARCHAR name
+        NVARCHAR description
+        DECIMAL unit_price
+        NVARCHAR unit_of_measure
+        INT minimum_stock_level
+    }
+
+    WAREHOUSE_STOCKS {
+        INT id PK
+        INT product_id FK UK
+        INT quantity_on_hand
+        INT reserved_quantity
+        DATETIME2 updated_at
+    }
+
+    SUPPLY_ORDERS {
+        INT id PK
+        INT supplier_id FK
+        INT manager_id FK
+        NVARCHAR status
+        DATETIME2 order_date
+        DATETIME2 expected_delivery_date
+        NVARCHAR notes
+    }
+
+    SUPPLY_ORDER_ITEMS {
+        INT id PK
+        INT order_id FK
+        INT product_id FK
+        INT quantity_ordered
+        DECIMAL unit_price
+    }

@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1120" viewBox="0 0 1600 1120" role="img" aria-labelledby="title desc">
+  <title id="title">TradingCompany database diagram</title>
+  <desc id="desc">Entity relationship diagram for warehouse managers, suppliers, products, warehouse stocks, supply orders and supply order items.</desc>
+  <defs>
+    <style>
+      .page { fill: #f7f9fb; }
+      .table { fill: #ffffff; stroke: #2f3a4a; stroke-width: 2; }
+      .header { fill: #274060; }
+      .headerText { fill: #ffffff; font: 700 18px Arial, sans-serif; }
+      .column { fill: #1f2937; font: 14px Consolas, "Courier New", monospace; }
+      .key { fill: #b45309; font: 700 14px Consolas, "Courier New", monospace; }
+      .relation { stroke: #475569; stroke-width: 2.5; fill: none; marker-end: url(#arrow); }
+      .relationText { fill: #334155; font: 13px Arial, sans-serif; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569" />
+    </marker>
+  </defs>
+
+  <rect class="page" x="0" y="0" width="1600" height="1120" />
+  <text x="40" y="38" fill="#111827" font-family="Arial, sans-serif" font-size="26" font-weight="700">TradingCompany warehouse SQL Server database schema</text>
+
+  <g id="warehouse-managers">
+    <rect class="table" x="40" y="70" width="430" height="220" rx="6" />
+    <rect class="header" x="40" y="70" width="430" height="42" rx="6" />
+    <text class="headerText" x="58" y="98">warehouse_managers</text>
+    <text class="key" x="58" y="136">PK  id                         INT</text>
+    <text class="key" x="58" y="160">UK  username                   NVARCHAR(60)</text>
+    <text class="column" x="58" y="184">    password_hash              NVARCHAR(255)</text>
+    <text class="column" x="58" y="208">    full_name                  NVARCHAR(150)</text>
+    <text class="key" x="58" y="232">UK  email                      NVARCHAR(254)</text>
+    <text class="column" x="58" y="256">    created_at                 DATETIME2</text>
+  </g>
+
+  <g id="suppliers">
+    <rect class="table" x="585" y="70" width="430" height="250" rx="6" />
+    <rect class="header" x="585" y="70" width="430" height="42" rx="6" />
+    <text class="headerText" x="603" y="98">suppliers</text>
+    <text class="key" x="603" y="136">PK  id                         INT</text>
+    <text class="key" x="603" y="160">UK  name                       NVARCHAR(120)</text>
+    <text class="column" x="603" y="184">    contact_name               NVARCHAR(120)</text>
+    <text class="column" x="603" y="208">    phone                      NVARCHAR(30)</text>
+    <text class="key" x="603" y="232">UK  email                      NVARCHAR(254)</text>
+    <text class="column" x="603" y="256">    address                    NVARCHAR(250)</text>
+    <text class="column" x="603" y="280">    is_active                  BIT</text>
+  </g>
+
+  <g id="products">
+    <rect class="table" x="585" y="395" width="430" height="300" rx="6" />
+    <rect class="header" x="585" y="395" width="430" height="42" rx="6" />
+    <text class="headerText" x="603" y="423">products</text>
+    <text class="key" x="603" y="461">PK  id                         INT</text>
+    <text class="key" x="603" y="485">FK  supplier_id                INT</text>
+    <text class="key" x="603" y="509">UK  sku                        NVARCHAR(40)</text>
+    <text class="column" x="603" y="533">    name                       NVARCHAR(150)</text>
+    <text class="column" x="603" y="557">    description                NVARCHAR(500)</text>
+    <text class="column" x="603" y="581">    unit_price                 DECIMAL(12,2)</text>
+    <text class="column" x="603" y="605">    unit_of_measure            NVARCHAR(30)</text>
+    <text class="column" x="603" y="629">    minimum_stock_level        INT</text>
+  </g>
+
+  <g id="warehouse-stocks">
+    <rect class="table" x="1125" y="430" width="430" height="220" rx="6" />
+    <rect class="header" x="1125" y="430" width="430" height="42" rx="6" />
+    <text class="headerText" x="1143" y="458">warehouse_stocks</text>
+    <text class="key" x="1143" y="496">PK  id                         INT</text>
+    <text class="key" x="1143" y="520">FK  product_id                 INT</text>
+    <text class="key" x="1143" y="544">UK  product_id                 INT</text>
+    <text class="column" x="1143" y="568">    quantity_on_hand           INT</text>
+    <text class="column" x="1143" y="592">    reserved_quantity          INT</text>
+    <text class="column" x="1143" y="616">    updated_at                 DATETIME2</text>
+  </g>
+
+  <g id="supply-orders">
+    <rect class="table" x="40" y="425" width="430" height="275" rx="6" />
+    <rect class="header" x="40" y="425" width="430" height="42" rx="6" />
+    <text class="headerText" x="58" y="453">supply_orders</text>
+    <text class="key" x="58" y="491">PK  id                         INT</text>
+    <text class="key" x="58" y="515">FK  supplier_id                INT</text>
+    <text class="key" x="58" y="539">FK  manager_id                 INT</text>
+    <text class="column" x="58" y="563">    status                     NVARCHAR(20)</text>
+    <text class="column" x="58" y="587">    order_date                 DATETIME2</text>
+    <text class="column" x="58" y="611">    expected_delivery_date     DATETIME2</text>
+    <text class="column" x="58" y="635">    notes                      NVARCHAR(500)</text>
+  </g>
+
+  <g id="supply-order-items">
+    <rect class="table" x="585" y="825" width="430" height="220" rx="6" />
+    <rect class="header" x="585" y="825" width="430" height="42" rx="6" />
+    <text class="headerText" x="603" y="853">supply_order_items</text>
+    <text class="key" x="603" y="891">PK  id                         INT</text>
+    <text class="key" x="603" y="915">FK  order_id                   INT</text>
+    <text class="key" x="603" y="939">FK  product_id                 INT</text>
+    <text class="column" x="603" y="963">    quantity_ordered           INT</text>
+    <text class="column" x="603" y="987">    unit_price                 DECIMAL(12,2)</text>
+  </g>
+
+  <path class="relation" d="M 255 290 C 255 350 255 365 255 425" />
+  <text class="relationText" x="270" y="360">warehouse_managers.id -> supply_orders.manager_id</text>
+
+  <path class="relation" d="M 800 320 C 800 350 800 365 800 395" />
+  <text class="relationText" x="820" y="360">suppliers.id -> products.supplier_id</text>
+
+  <path class="relation" d="M 585 205 C 515 235 470 390 470 515" />
+  <text class="relationText" x="360" y="370">suppliers.id -> supply_orders.supplier_id</text>
+
+  <path class="relation" d="M 1015 545 C 1050 545 1085 540 1125 540" />
+  <text class="relationText" x="1030" y="525">products.id -> warehouse_stocks.product_id</text>
+
+  <path class="relation" d="M 470 590 C 520 655 570 730 630 825" />
+  <text class="relationText" x="410" y="760">supply_orders.id -> supply_order_items.order_id</text>
+
+  <path class="relation" d="M 800 695 C 800 745 800 775 800 825" />
+  <text class="relationText" x="820" y="765">products.id -> supply_order_items.product_id</text>
+</svg>
